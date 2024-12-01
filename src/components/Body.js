@@ -8,7 +8,7 @@ const Body = () => {
         </div>
         <div className="res_container">
             {
-                resList.map((restaurant) => (
+                restaurantList.map((restaurant) => (
                     <RestaurantCard key={restaurant.id} resData={restaurant}/>
                 ))
             }

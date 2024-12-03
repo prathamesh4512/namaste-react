@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import Header from "./src/components/Header";
 import Body from "./src/components/Body";
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+// import { createBrowserRouter, Outlet } from 'react-router-dom';
 import Error from './src/components/Error';
+import { lazy, Suspense } from 'react';
+const lazyComp = lazy(()=>import("./src/components/LazyComp"))
 
 const AppLayout = () => {
+
+  const [a,setA] = useState("10")
+
+  useEffect(()=>{
+    setA(20)
+  })
+
+  debugger;
+
     return <div className="app">
         <Header/>
-        <Outlet/>
+        <h1 className='hover:colo'>{a}</h1>
+        <Body />
     </div>
 }
 
@@ -20,6 +32,12 @@ const appRouter = createBrowserRouter([
       {
         path: "/",
         element: <Body />
+      },
+      {
+        path: "lazy",
+        element: <Suspense fallback={<h1>Loading</h1>}>
+          <LazyComp />
+          </Suspense>
       },
       {
         path: "/about",
@@ -40,4 +58,4 @@ const appRouter = createBrowserRouter([
 
 const root = createRoot(document.getElementById("root"));
 
-root.render(<RouterProvider router={appRouter}/>);
+root.render(<AppLayout />);
